@@ -1,12 +1,17 @@
 
+// Tweak these parameters to your hearth's content
+
+// Detail
+$fn = 100;
+
 // Tag height, in mm
-height = 10;
+height = 7;
 
 // Inner radius, in mm
-radius = 15;
+radius = 14.5;
 
 // Thickness
-thickness = 2;
+thickness = 1.5;
 
 // Name on the tag
 name = "Marcos";
@@ -15,10 +20,15 @@ name = "Marcos";
 font = "Consolas";
 
 // Letters height, in mm
-letterheight = 7;
+letterheight = 4;
 
 // Spacing between letters, in degrees
-letterspacing = 20;
+letterspacing = 15;
+
+// Letter relief size, in mm
+letterrelief = 1;
+
+// END OF CONFIGURATION
 
 difference() {
     // Outer shell
@@ -28,16 +38,16 @@ difference() {
     cylinder(h=height, r=radius);
 
     // Hole on the back
-    translate([-radius*1.6/2,radius/2,0])
-    cube([radius*1.6,radius*0.5+thickness,height]);
+    translate([-radius*1.8/2,radius*0.4,0])
+    cube([radius*1.8,radius*0.7+thickness,height]);
+}
 
-    // Draw each letter
-    for (i = [0 : len(name) - 1]) {
-        angle = 90 - (len(name) - 1) * letterspacing / 2 + i * letterspacing;
-        
-        translate([-radius * 0.9 * cos(angle), -radius * 0.9 * sin(angle), height / 2 - letterheight / 2])
-        rotate([90, 0, angle - 90])
-        linear_extrude(height = 2 * thickness)
-        text(name[i], size = letterheight, font = font, halign = "center");
-    }
+// Draw each letter
+for (i = [0 : len(name) - 1]) {
+    angle = 90 - (len(name) - 1) * letterspacing / 2 + i * letterspacing;
+
+    translate([-radius * cos(angle), -radius * sin(angle), height / 2 - letterheight / 2])
+    rotate([90, 0, angle - 90])
+    linear_extrude(height = (thickness + letterrelief))
+    text(name[i], size = letterheight, font = font, halign = "center");
 }
