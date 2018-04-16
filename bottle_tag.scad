@@ -1,3 +1,5 @@
+// Copyright 2018 Marcos Del Sol Vives
+// SPDX-License-Identifier: ISC
 
 // Tweak these parameters to your hearth's content
 

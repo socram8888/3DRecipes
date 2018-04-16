@@ -3,6 +3,8 @@ Socram's random 3D shit
 
 These are a collection of [OpenSCAD](http://www.openscad.org) models I've designed for personal usage, and uploaded them to [GitHub](https://github.com/socram8888/3DRecipes) and [Thingiverse](https://www.thingiverse.com/socram8888/) in case anybody else finds them useful.
 
+They are all licensed under the very liberative [ISC License](LICENSE), so feel free to download, modify and sell them.
+
 Bottle tag
 ----------
 
