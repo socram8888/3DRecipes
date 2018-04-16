@@ -12,6 +12,13 @@ Bottle tag
 
 This is a quick and dirt name tag that clips on water bottles, for storing them on a shared fridge at my workplace.
 
+Coil
+----
+
+![Coil support preview](previews/coil.png?raw=true)
+
+Really simple 3D printed support for hand-wound coils.
+
 Glass drainer
 -------------
 
