@@ -30,6 +30,9 @@ letterspacing = 15;
 // Letter relief size, in mm
 letterrelief = 1;
 
+// Size of the hole on the back, relative to tag radius
+holesize = 0.8;
+
 // END OF CONFIGURATION
 
 difference() {
@@ -40,8 +43,9 @@ difference() {
     cylinder(h=height, r=radius);
 
     // Hole on the back
-    translate([-radius*1.8/2,radius*0.4,0])
-    cube([radius*1.8,radius*0.7+thickness,height]);
+    translate([-radius * holesize, 0, 0]) {
+        cube([2 * radius * holesize, radius+thickness, height]);
+    }
 }
 
 // Draw each letter
