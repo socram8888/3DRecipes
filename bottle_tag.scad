@@ -52,8 +52,11 @@ difference() {
 for (i = [0 : len(name) - 1]) {
     angle = 90 - (len(name) - 1) * letterspacing / 2 + i * letterspacing;
 
-    translate([-radius * cos(angle), -radius * sin(angle), height / 2 - letterheight / 2])
-    rotate([90, 0, angle - 90])
-    linear_extrude(height = (thickness + letterrelief))
-    text(name[i], size = letterheight, font = font, halign = "center");
+    translate([-radius * cos(angle), -radius * sin(angle), height / 2 - letterheight / 2]) {
+		rotate([90, 0, angle - 90]) {
+			linear_extrude(height = (thickness + letterrelief)) {
+				text(name[i], size = letterheight, font = font, halign = "center");
+			}
+		}
+	}
 }
