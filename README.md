@@ -5,6 +5,13 @@ These are a collection of [OpenSCAD](http://www.openscad.org) models I've design
 
 They are all licensed under the very liberative [ISC License](LICENSE), so feel free to download, modify and sell them.
 
+Bike handle button
+------------------
+
+![Bike handle button preview](previews/bike_handle_button.png?raw=true)
+
+It's basically a support for mounting a momentary button or switch on the handlebar of my bike.
+
 Bottle tag
 ----------
 
