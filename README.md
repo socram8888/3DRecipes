@@ -32,3 +32,10 @@ Glass drainer
 ![Glass drainer preview](previews/glass_drainer.png?raw=true)
 
 This is a small round glass drainer designed for drying my mug at my workplace. It's really simple, and can be configured to different diameters and sizes.
+
+IBM Model M bit
+---------------
+
+![Bit preview](previews/ibm_model_m_bit.png?raw=true)
+
+5.5mm bit for opening IBM Model M keyboards.
