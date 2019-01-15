@@ -29,7 +29,7 @@ connector_screw_to_center = 6;
 connector_screw_diameter = 4;
 
 // Cable hole
-cable_diameter = 8;
+cable_diameter = 5;
 cable_pos = 4;
 
 // Clamp
