@@ -33,7 +33,7 @@ cable_diameter = 8;
 cable_pos = 4;
 
 // Clamp
-clamp_size = [6, 15, 35];
+clamp_size = [15, 6, 35];
 clamp_pos = 35;
 
 // Clamp screw hole diameter
@@ -62,19 +62,19 @@ difference() {
 				cylinder(d=lamp_diameter+2*wall_thickness, h=lamp_height+connector_height+connector_padding+wall_thickness);
 
 				// Base for the clamp
-				translate([-clamp_size[0]/2, 0, clamp_pos - clamp_size[2]/2])
-					cube([clamp_size[0], lamp_diameter/2+wall_thickness, clamp_size[2]]);
+				translate([0, -clamp_size[1]/2, clamp_pos - clamp_size[2]/2])
+					cube([lamp_diameter/2+wall_thickness, clamp_size[1], clamp_size[2]]);
 
-				translate([0, lamp_diameter/2+clamp_size[1]/2+wall_thickness, clamp_pos])
+				translate([lamp_diameter/2+clamp_size[0]/2+wall_thickness, 0, clamp_pos])
 					difference() {
 						// Clamp itself
 						resize(clamp_size)
-							rotate([90, 90, -90])
+							rotate([0, 90, 90])
 								wave();
 
 						// Hole in the clamp for screw
-						translate([500, 0, 0])
-						rotate([90, 90, -90])
+						translate([0, 500, 0])
+						rotate([90, 90, 0])
 							cylinder(d=clamp_screw_diameter, h=1000);
 					}
 			}
@@ -85,7 +85,7 @@ difference() {
 
 			// Cable hole
 			translate([0, 0, cable_diameter/2+wall_thickness+cable_pos])
-				rotate([-90, 0, 0])
+				rotate([90, 0, 90])
 					cylinder(d=cable_diameter, h=lamp_diameter/2+wall_thickness);
 		}
 
