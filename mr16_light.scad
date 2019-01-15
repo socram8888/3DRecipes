@@ -1,7 +1,7 @@
 // Copyright 2019 Marcos Del Sol Vives
 // SPDX-License-Identifier: ISC
 
-$fn = 20;
+$fn = 100;
 
 // Thickness of the wall
 wall_thickness = 3;
