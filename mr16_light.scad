@@ -4,13 +4,13 @@
 $fn = 20;
 
 // Thickness of the wall
-wall_thickness = 4;
+wall_thickness = 3;
 
 // Diameter of the lamp, excluding the thin rim of the top
 lamp_diameter = 47;
 
 // Height of the lamp excluding the pins and the rim
-lamp_height = 44;
+lamp_height = 43;
 
 // Size of the female connector
 connector_height = 11;
@@ -33,7 +33,7 @@ cable_diameter = 8;
 cable_pos = 4;
 
 // Clamp
-clamp_size = [8, 15, 35];
+clamp_size = [6, 15, 35];
 clamp_pos = 35;
 
 // Clamp screw hole diameter
