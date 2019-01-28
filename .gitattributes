@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.scad text
+*.md text
+*.jpg binary
+*.png binary
+README text
+LICENSE text
