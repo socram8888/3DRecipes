@@ -36,27 +36,27 @@ holesize = 0.8;
 // END OF CONFIGURATION
 
 difference() {
-    // Outer shell
-    cylinder(h=height, r=radius+thickness);
+	// Outer shell
+	cylinder(h=height, r=radius+thickness);
 
-    // Inner shell
-    cylinder(h=height, r=radius);
+	// Inner shell
+	cylinder(h=height, r=radius);
 
-    // Hole on the back
-    translate([-radius * holesize, 0, 0]) {
-        cube([2 * radius * holesize, radius+thickness, height]);
-    }
+	// Hole on the back
+	translate([-radius * holesize, 0, 0]) {
+		cube([2 * radius * holesize, radius+thickness, height]);
+	}
 }
 
 // Draw each letter
 for (i = [0 : len(name) - 1]) {
-    angle = 90 - (len(name) - 1) * letterspacing / 2 + i * letterspacing;
+	angle = 90 - (len(name) - 1) * letterspacing / 2 + i * letterspacing;
 
-    translate([-radius * cos(angle), -radius * sin(angle), height / 2 - letterheight / 2]) {
-        rotate([90, 0, angle - 90]) {
-            linear_extrude(height = (thickness + letterrelief)) {
-                text(name[i], size = letterheight, font = font, halign = "center");
-            }
-        }
-    }
+	translate([-radius * cos(angle), -radius * sin(angle), height / 2 - letterheight / 2]) {
+		rotate([90, 0, angle - 90]) {
+			linear_extrude(height = (thickness + letterrelief)) {
+				text(name[i], size = letterheight, font = font, halign = "center");
+			}
+		}
+	}
 }

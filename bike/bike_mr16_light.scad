@@ -46,7 +46,7 @@ difference() {
 			union() {
 				// Outer shell
 				cylinder(d=lamp_diameter+2*wall_thickness, h=lamp_height+connector_height+connector_padding+wall_thickness);
-				
+
 				translate([0, 10, 20])
 					rotate([90, 0, 0])
 						bike_mount(lamp_diameter/2 + wall_thickness + 5);
@@ -60,11 +60,11 @@ difference() {
 			translate([0, 0, cable_diameter/2+wall_thickness+cable_pos])
 				rotate([90, 0, 90])
 					cylinder(d=cable_diameter, h=lamp_diameter/2+wall_thickness);
-			
+
 			// LED hole
 			translate([0, connector_diameter / 4 + lamp_diameter / 4, 0])
 				cylinder(d=led_diameter, h=wall_thickness);
-			
+
 			// Switch hole
 			translate([0, -connector_diameter / 4 - lamp_diameter / 4, 0])
 				cylinder(d=switch_diameter, h=wall_thickness);

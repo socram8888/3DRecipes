@@ -22,24 +22,24 @@ screw_diameter = 4.3;
 screw_margin = 5;
 
 difference() {
-    union() {
-        cylinder(r=outer_radius, h=ring_height);
+	union() {
+		cylinder(r=outer_radius, h=ring_height);
 
-        translate([-tab_to_center, 0, 0]) {
-            cube([tab_thickness, tab_y + tab_length, ring_height]);
-        }
+		translate([-tab_to_center, 0, 0]) {
+			cube([tab_thickness, tab_y + tab_length, ring_height]);
+		}
 
-        translate([-tab_to_center + tab_spacing + tab_thickness, 0, 0]) {
-            cube([tab_thickness, tab_y + tab_length, ring_height]);
-        }
-    }
-    
-    cylinder(r = inner_radius, h = ring_height);
-    translate([-tab_to_center + tab_thickness, 0, 0]) {
-        cube([tab_spacing, tab_y + tab_length, ring_height]);
-    }
-    
-    translate([-tab_to_center, tab_y + tab_length - screw_diameter - screw_margin, ring_height / 2])
-        rotate([0, 90, 0])
-            cylinder(r = screw_diameter, h=tab_spacing + tab_thickness * 2);
+		translate([-tab_to_center + tab_spacing + tab_thickness, 0, 0]) {
+			cube([tab_thickness, tab_y + tab_length, ring_height]);
+		}
+	}
+
+	cylinder(r = inner_radius, h = ring_height);
+	translate([-tab_to_center + tab_thickness, 0, 0]) {
+		cube([tab_spacing, tab_y + tab_length, ring_height]);
+	}
+
+	translate([-tab_to_center, tab_y + tab_length - screw_diameter - screw_margin, ring_height / 2])
+		rotate([0, 90, 0])
+			cylinder(r = screw_diameter, h=tab_spacing + tab_thickness * 2);
 }

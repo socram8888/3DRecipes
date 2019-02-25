@@ -50,7 +50,7 @@ difference() {
 				translate([(count - 1) * nut_diameter, 0, 0])
 					cylinder(d=nut_diameter, h=tab_height);
 			}
-			
+
 			// Holes for buttons
 			for (i = [0 : count - 1]) {
 				translate([i * nut_diameter, 0, 0])
