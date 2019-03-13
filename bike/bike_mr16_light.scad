@@ -36,7 +36,7 @@ cable_pos = 4;
 led_diameter = 5;
 
 // Switch diameter
-switch_diameter = 7;
+switch_diameter = 6;
 
 use <bike_mount.scad>;
 
@@ -47,7 +47,7 @@ difference() {
 				// Outer shell
 				cylinder(d=lamp_diameter+2*wall_thickness, h=lamp_height+connector_height+connector_padding+wall_thickness);
 				
-				translate([0, 10, 20])
+				translate([0, 10, 30])
 					rotate([90, 0, 0])
 						bike_mount(lamp_diameter/2 + wall_thickness + 5);
 			}

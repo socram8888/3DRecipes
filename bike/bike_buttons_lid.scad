@@ -10,7 +10,7 @@ wall_thickness = 2.5;
 base_thickness = 2;
 
 // Height of the tab protecting the contacts of the button
-tab_height = 4;
+tab_height = 3;
 
 // Tab thickness
 tab_thickness = 1;

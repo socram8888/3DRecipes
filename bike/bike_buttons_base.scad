@@ -19,7 +19,7 @@ nut_diameter = 14;
 count = 3;
 
 // Cable diameter
-cable_diameter = 4;
+cable_diameter = 3.9;
 
 // Cable Z pos
 cable_z_pos = 7;
@@ -40,6 +40,7 @@ difference() {
 				sphere(r=wall_thickness);
 			}
 
+			// Hole on the bottom for cabling
 			translate([-nut_diameter / 2 - wall_thickness, -nut_diameter / 2 - wall_thickness, -wall_thickness]) {
 				cube([nut_diameter * count + wall_thickness * 2, nut_diameter + wall_thickness * 2, wall_thickness]);
 			}
@@ -60,7 +61,7 @@ difference() {
 	}
 
 	// Hole for the cable
-	translate([0, 0, cable_z_pos]) {
+	translate([7, 0, cable_z_pos]) {
 		rotate([90, 0, 0]) {
 			cylinder(d=cable_diameter, h=nut_diameter / 2 + wall_thickness);
 		}
