@@ -22,7 +22,7 @@ difference() {
 			cube([outer_diam / 2 + hole_outer_diam / 2, hole_outer_diam, height]);
 		cylinder(d = outer_diam, h = height);
 	}
-	
+
 	cylinder(d = inner_diam, h = height);
 	translate([outer_diam / 2 + hole_outer_diam / 2, 0, 0])
 		cylinder(d = hole_inner_diam, h = height);

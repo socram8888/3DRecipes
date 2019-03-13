@@ -15,13 +15,13 @@ count_y = 4;
 margin = 1;
 
 for (x = [0 : count_x - 1]) {
-    for (y = [0 : count_y - 1]) {
-        translate([x * (widewidth + margin), y * (wideheight + thinheight + margin), 0]) {
-            translate([(widewidth - thinwidth) / 2, 0, 0])
-                cube([thinwidth, thinheight, thickness]);
+	for (y = [0 : count_y - 1]) {
+		translate([x * (widewidth + margin), y * (wideheight + thinheight + margin), 0]) {
+			translate([(widewidth - thinwidth) / 2, 0, 0])
+				cube([thinwidth, thinheight, thickness]);
 
-            translate([0, thinheight, 0])
-                cube([widewidth, wideheight, thickness]);
-        }
-    }
+			translate([0, thinheight, 0])
+				cube([widewidth, wideheight, thickness]);
+		}
+	}
 }

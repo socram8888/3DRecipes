@@ -18,18 +18,18 @@ oradius = 32;
 height = 3;
 
 difference() {
-    union() {
-        cylinder(r=oradius, h=wallsize);
-        translate([0, 0, wallsize]) {
-            cylinder(r=iradius, h=height);
-        }
-        translate([0, 0, wallsize+height]) {
-            cylinder(r=oradius, h=wallsize);
-        }
-    }
-    cylinder(r=iradius-wallsize, h=2*wallsize+height);
-    translate([iradius, -wallsize, wallsize+height]) {
-        cube([oradius-iradius, wallsize*2, wallsize]);
-    }
+	union() {
+		cylinder(r=oradius, h=wallsize);
+		translate([0, 0, wallsize]) {
+			cylinder(r=iradius, h=height);
+		}
+		translate([0, 0, wallsize+height]) {
+			cylinder(r=oradius, h=wallsize);
+		}
+	}
+	cylinder(r=iradius-wallsize, h=2*wallsize+height);
+	translate([iradius, -wallsize, wallsize+height]) {
+		cube([oradius-iradius, wallsize*2, wallsize]);
+	}
 }
 
