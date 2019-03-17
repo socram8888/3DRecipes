@@ -1,3 +1,5 @@
+// Copyright 2019 Marcos Del Sol Vives
+// SPDX-License-Identifier: ISC
 
 module bike_mount(tab_height=5, tab_thickness=8) {
 	inner_diameter = 22;

@@ -1,3 +1,7 @@
+// Copyright 2019 Marcos Del Sol Vives
+// SPDX-License-Identifier: ISC
+
+$fn = 100;
 
 battery_diameter = 18.2;
 battery_length = 65;
@@ -30,9 +34,14 @@ wall_supports = 6;
 wall_support_thickness = 5;
 wall_side_margin = 10;
 
-wall_usable = base_height - 2 * wall_side_margin;
-
 charge_port_diam = 16;
+
+screw_hole_z = wall_height / 2;
+screw_hole_y = 6;
+screw_hole_diam = 4;
+screw_hole_count = 2;
+
+wall_usable = base_height - 2 * wall_side_margin;
 
 plug_size = [14, 9];
 
@@ -41,9 +50,24 @@ cube([base_width, base_height, base_thickness]);
 translate([base_width-base_thickness, 0, 0]) {
 	difference() {
 		cube([wall_thickness, base_height, wall_height]);
-		translate([0, 99, 35])
-		rotate([0, 90, 0])
-			#cylinder(d = charge_port_diam, h=wall_thickness+1);
+		translate([0, 99, 35]) {
+			rotate([0, 90, 0]) {
+				cylinder(d = charge_port_diam, h=wall_thickness+1);
+			}
+		}
+
+		for (i = [0 : screw_hole_count - 1]) {
+			translate([0, screw_hole_y, wall_height * (i + 0.5) / screw_hole_count]) {
+				rotate([0, 90, 0]) {
+					#cylinder(d = screw_hole_diam, h=wall_thickness+1);
+				}
+			}
+			translate([0, base_height - screw_hole_y, wall_height * (i + 0.5) / screw_hole_count]) {
+				rotate([0, 90, 0]) {
+					#cylinder(d = screw_hole_diam, h=wall_thickness+1);
+				}
+			}
+		}
 		
 		for (y = [0:1]) {
 			for (z = [0:1]) {
