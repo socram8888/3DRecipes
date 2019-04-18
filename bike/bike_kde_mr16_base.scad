@@ -14,9 +14,10 @@ base_diam = 26;
 base_height = 20;
 
 screw_spacing = 20.5;
-screw_thread_diam = 2;
+screw_thread_diam = 1.5;
 
 cable_diam = 4;
+led_diam = 5;
 
 use <bike_mount.scad>;
 
@@ -43,7 +44,10 @@ difference() {
 			translate([0, 0, wall_thickness])
 				cylinder(d=inner_diam, h=base_height+insert_height-wall_thickness+0.01);	
 			
-			cylinder(d=cable_diam, h=wall_thickness+0.1);
+			translate([0, inner_diam / 4, 0])
+				cylinder(d=cable_diam, h=wall_thickness+0.1);
+			translate([0, -inner_diam / 4, 0])
+				cylinder(d=led_diam, h=wall_thickness+0.1);
 		}
 
 		intersection() {
