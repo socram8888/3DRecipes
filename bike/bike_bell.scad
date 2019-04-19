@@ -44,9 +44,11 @@ tie_holes = [
 tie_width = 5;
 tie_height = 3;
 
-tie_reinforcement_height = 3;
+tie_reinforcement_height = 4;
 tie_reinforcement_width = 7;
-tie_reinforcement_bevel = 3;
+tie_reinforcement_bevel = 5;
+
+tie_reinforcement_total = tie_reinforcement_width + 2 * tie_reinforcement_bevel;
 
 module shape(h) {
 	cylinder(d=large_total_diam, h=h);
@@ -112,20 +114,18 @@ for (i = [0 : len(tie_holes) - 1]) {
 
 	translate([center_x, center_y, base_thickness])
 		rotate([90, 0, angle_between_holes]) {
-			scale([support_size, tie_reinforcement_height * 2, tie_reinforcement_width])
+			scale([support_size/tie_reinforcement_height/2, 1, 1])
 				intersection() {
-					cylinder(d=1, h=1, center=true);
-					translate([-0.5, 0, -0.5])
-						cube([1, 0.5, 1]);
+					cylinder(r=tie_reinforcement_height, h=tie_reinforcement_total, center=true);
+						translate([tie_reinforcement_height, 0, -tie_reinforcement_total/2])
+							rotate([0, -90, 0])
+								linear_extrude(tie_reinforcement_height*2)
+									polygon([
+										[0,0],
+										[tie_reinforcement_total, 0],
+										[tie_reinforcement_width + tie_reinforcement_bevel, tie_reinforcement_height],
+										[tie_reinforcement_bevel, tie_reinforcement_height]
+									]);
 				}
-			for (rot_y = [0 : 180 : 180])
-				rotate([0, rot_y, 0])
-					translate([0, 0, tie_reinforcement_width / 2])
-						scale([support_size, tie_reinforcement_height * 2, tie_reinforcement_bevel*2])
-							intersection() {
-								sphere(d=1);
-								translate([-0.5, 0, 0])
-									cube([1, 0.5, 0.5]);
-							}
 		}
 }
