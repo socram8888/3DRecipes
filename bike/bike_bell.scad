@@ -19,26 +19,15 @@ screw_hole_diam = 4;
 cable_hole_distance = 68;
 cable_hole_diam = 4.1;
 
-large_total_diam = large_diameter+tab_margin+tab_thickness;
-small_total_diam = small_diameter+tab_margin+tab_thickness;
+large_total_diam = large_diameter+2*tab_margin+tab_thickness;
+small_total_diam = small_diameter+2*tab_margin+tab_thickness;
 
 tie_holes = [
-	[
-		[52, 22],
-		[62, 9]
-	],
-	[
-		[-48, 27],
-		[-60, 22]
-	],
-	[
-		[-42, -21],
-		[-52, -26]
-	],
-	[
-		[11, -52],
-		[22, -63]
-	]
+	//  X,   Y, size, angle
+	[ -40,  35,   10,    20 ],
+	[  47,  30,   14,   -30 ],
+	[ -22, -25,   10,    20 ],
+	[  10, -35,   14,   -30 ]
 ];
 
 tie_width = 5;
@@ -46,7 +35,7 @@ tie_height = 3;
 
 tie_reinforcement_height = 4;
 tie_reinforcement_width = 7;
-tie_reinforcement_bevel = 5;
+tie_reinforcement_bevel = 4;
 
 tie_reinforcement_total = tie_reinforcement_width + 2 * tie_reinforcement_bevel;
 
@@ -59,6 +48,7 @@ module shape(h) {
 difference() {
 	shape(base_thickness);
 
+	// Corner holes for bell screws
 	for (x = [-1 : 2 : 1]) {
 		for (y = [-1 : 2 : 1]) {
 			translate([x * corner_screw_distance / 2, y * corner_screw_distance / 2, 0])
@@ -66,21 +56,30 @@ difference() {
 		}
 	}
 
+	// Side holes for bell screws
 	for (x = [-1 : 2 : 1]) {
 		translate([x * center_screw_distance / 2, 0, 0])
 			cylinder(d=screw_hole_diam, h=base_thickness+0.01);
 	}
 
+	// Cable hole
 	translate([0, cable_hole_distance, 0])
 		cylinder(d=cable_hole_diam, h=base_thickness+0.01);
 
+	// Holes for ties
 	for (i = [0 : len(tie_holes) - 1]) {
-		tie_pair = tie_holes[i];
-		angle_between_holes = atan2(tie_pair[1][1] - tie_pair[0][1], tie_pair[1][0] - tie_pair[0][0]);
-		for (j = [0 : 1]) {
-			translate([tie_pair[j][0], tie_pair[j][1], base_thickness/2]) {
-				rotate([0, 0, angle_between_holes])
-				cube([tie_height, tie_width, base_thickness+0.1], center=true);
+		tie_center_x = tie_holes[i][0];
+		tie_center_y = tie_holes[i][1];
+		tie_size     = tie_holes[i][2];
+		tie_angle    = tie_holes[i][3];
+
+		translate([tie_center_x, tie_center_y, 0]) {
+			rotate([0, 0, tie_angle]) {
+				for (rot = [-1 : 2 : 1]) {
+					translate([rot * tie_size / 2, 0, base_thickness/2]) {
+						cube([tie_height, tie_width, base_thickness+0.1], center=true);
+					}
+				}
 			}
 		}
 	}
@@ -104,17 +103,14 @@ translate([0, 0, base_thickness]) {
 }
 
 for (i = [0 : len(tie_holes) - 1]) {
-	hole_a = tie_holes[i][0];
-	hole_b = tie_holes[i][1];
+	tie_center_x = tie_holes[i][0];
+	tie_center_y = tie_holes[i][1];
+	tie_size     = tie_holes[i][2];
+	tie_angle    = tie_holes[i][3];
 
-	center_x = (hole_a[0] + hole_b[0]) / 2;
-	center_y = (hole_a[1] + hole_b[1]) / 2;
-	angle_between_holes = atan2(hole_b[1] - hole_a[1], hole_b[0] - hole_a[0]);
-	support_size = sqrt(pow(hole_b[0] - hole_a[0], 2) + pow(hole_b[1] - hole_a[1], 2)) - tie_height;
-
-	translate([center_x, center_y, base_thickness])
-		rotate([90, 0, angle_between_holes]) {
-			scale([support_size/tie_reinforcement_height/2, 1, 1])
+	translate([tie_center_x, tie_center_y, base_thickness])
+		rotate([90, 0, tie_angle]) {
+			scale([(tie_size - tie_height) / tie_reinforcement_height / 2, 1, 1])
 				intersection() {
 					cylinder(r=tie_reinforcement_height, h=tie_reinforcement_total, center=true);
 						translate([tie_reinforcement_height, 0, -tie_reinforcement_total/2])
