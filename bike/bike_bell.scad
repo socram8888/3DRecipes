@@ -1,16 +1,20 @@
 // Copyright 2019 Marcos Del Sol Vives
 // SPDX-License-Identifier: ISC
 
+use <../pie.scad>;
+
 $fn = 50;
 
 base_thickness = 3;
 large_diameter = 150;
 small_diameter = 68;
 circle_distance = 50;
-tab_height = 30;
-tab_margin = 3;
 
+tab_height = 30;
+tab_margin = 10;
 tab_thickness = 3;
+tab_a1 = 40;
+tab_a2 = 130;
 
 corner_screw_distance = 95;
 center_screw_distance = 115;
@@ -19,8 +23,8 @@ screw_hole_diam = 4;
 cable_hole_distance = 68;
 cable_hole_diam = 4.1;
 
-large_total_diam = large_diameter+2*tab_margin+tab_thickness;
-small_total_diam = small_diameter+2*tab_margin+tab_thickness;
+tab_center_y = -large_diameter / 4 + circle_distance / 2 + small_diameter / 2;
+peak_radius = max([large_diameter / 2, circle_distance + small_diameter / 2]) + tab_margin + tab_thickness;
 
 tie_holes = [
 	//  X,   Y, size, angle
@@ -39,14 +43,35 @@ tie_reinforcement_bevel = 4;
 
 tie_reinforcement_total = tie_reinforcement_width + 2 * tie_reinforcement_bevel;
 
-module shape(h) {
-	cylinder(d=large_total_diam, h=h);
-	translate([0, circle_distance, 0])
-		cylinder(d=small_total_diam, h=h);
-}
-
 difference() {
-	shape(base_thickness);
+	union() {
+		cylinder(d=large_diameter, h=base_thickness);
+		translate([0, circle_distance, 0])
+			cylinder(d=small_diameter, h=base_thickness);
+
+		intersection() {
+			union() {
+				cylinder(r=large_diameter/2 + tab_margin + tab_thickness, h=base_thickness + tab_height);
+				translate([0, circle_distance, 0])
+					cylinder(r=small_diameter/2 + tab_margin + tab_thickness, h=base_thickness + tab_height);
+			}
+
+			translate([0, tab_center_y, 0]) {
+				linear_extrude(base_thickness+tab_height)
+					pie_slice(r=999, a1=tab_a1, a2=tab_a2);
+				rotate([0, 90, tab_a1])
+					cylinder(h=999, r=base_thickness+tab_height);
+				rotate([0, 90, tab_a2])
+					cylinder(h=999, r=base_thickness+tab_height);
+			}
+		}
+	}
+
+	translate([0, 0, base_thickness])
+		cylinder(r=large_diameter/2+tab_margin, h=tab_height+0.1);
+
+	translate([0, circle_distance, base_thickness])
+		cylinder(r=small_diameter/2+tab_margin, h=tab_height+0.1);
 
 	// Corner holes for bell screws
 	for (x = [-1 : 2 : 1]) {
@@ -82,23 +107,6 @@ difference() {
 				}
 			}
 		}
-	}
-}
-
-translate([0, 0, base_thickness]) {
-	difference() {
-		intersection() {
-			shape(tab_height);
-			translate([-large_total_diam/2, tab_height, 0]) {
-				rotate([0, 90, 0])
-					cylinder(h=large_total_diam, r=tab_height);
-				cube([large_total_diam, circle_distance+small_total_diam/2-tab_height, tab_height]);
-			}
-		}
-
-		cylinder(d=large_diameter+tab_margin, h=tab_height+0.1);
-		translate([0, circle_distance, 0])
-			cylinder(d=small_diameter+tab_margin, h=tab_height+0.1);
 	}
 }
 
