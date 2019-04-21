@@ -13,8 +13,9 @@ circle_distance = 50;
 tab_height = 30;
 tab_margin = 10;
 tab_thickness = 3;
-tab_a1 = 40;
-tab_a2 = 130;
+tab_a1 = 20;
+tab_a2 = 180 - tab_a1;
+tab_bevel = 10;
 
 corner_screw_distance = 95;
 center_screw_distance = 115;
@@ -60,9 +61,11 @@ difference() {
 				linear_extrude(base_thickness+tab_height)
 					pie_slice(r=999, a1=tab_a1, a2=tab_a2);
 				rotate([0, 90, tab_a1])
-					cylinder(h=999, r=base_thickness+tab_height);
+					scale([1, tab_bevel/(base_thickness+tab_height), 1])
+						cylinder(h=999, r=base_thickness+tab_height);
 				rotate([0, 90, tab_a2])
-					cylinder(h=999, r=base_thickness+tab_height);
+					scale([1, tab_bevel/(base_thickness+tab_height), 1])
+						cylinder(h=999, r=base_thickness+tab_height);
 			}
 		}
 	}
