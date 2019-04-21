@@ -3,6 +3,8 @@
 
 $fn = 100;
 
+bell_plastic_thickness = 2;
+
 base_thickness = 3;
 large_diameter = 152;
 small_diameter = 70;
@@ -38,37 +40,56 @@ tie_reinforcement_height = 4;
 tie_reinforcement_width = 7;
 tie_reinforcement_bevel = 4;
 
+drainage_diam = 5;
+drainage_wall = 2;
+drainage_space = 2.5;
+
 bb_x = 2 * tab_thickness + 2 * tab_margin + large_diameter;
 tie_reinforcement_total = tie_reinforcement_width + 2 * tie_reinforcement_bevel;
+drainage_center = -large_diameter / 2 + drainage_diam / 2 + bell_plastic_thickness;
 
 difference() {
 	union() {
-		cylinder(d=large_diameter, h=base_thickness);
-		translate([0, circle_distance, 0])
-			cylinder(d=small_diameter, h=base_thickness);
+		difference() {
+			intersection() {
+				// Cylinders with margin and tab
+				union() {
+					cylinder(r=large_diameter/2 + tab_margin + tab_thickness, h=base_thickness + tab_height);
+					translate([0, circle_distance, 0])
+						cylinder(r=small_diameter/2 + tab_margin + tab_thickness, h=base_thickness + tab_height);
+				}
 
-		intersection() {
-			union() {
-				cylinder(r=large_diameter/2 + tab_margin + tab_thickness, h=base_thickness + tab_height);
-				translate([0, circle_distance, 0])
-					cylinder(r=small_diameter/2 + tab_margin + tab_thickness, h=base_thickness + tab_height);
-			}
+				// Mask for tab
+				union() {
+					// Base
+					cylinder(d=large_diameter, h=base_thickness);
+					translate([0, circle_distance, 0])
+						cylinder(d=small_diameter, h=base_thickness);
 
-			union() {
-				translate([-bb_x / 2, tab_height, 0]) {
-					rotate([0, 90, 0])
-						cylinder(r=tab_height + base_thickness, h=bb_x);
-					cube([bb_x, 999, tab_height+base_thickness]);
+					// Tab
+					translate([-bb_x / 2, tab_height, 0]) {
+						rotate([0, 90, 0])
+							cylinder(r=tab_height + base_thickness, h=bb_x);
+						cube([bb_x, 999, tab_height+base_thickness]);
+					}
 				}
 			}
+
+			translate([0, 0, base_thickness])
+				cylinder(r=large_diameter/2+tab_margin, h=tab_height+0.1);
+
+			translate([0, circle_distance, base_thickness])
+				cylinder(r=small_diameter/2+tab_margin, h=tab_height+0.1);
+		}
+
+		// Drainage cover
+		hull() {
+			translate([-drainage_diam/2, drainage_center+drainage_diam/2, 0])
+				cube([drainage_diam, drainage_wall, base_thickness+drainage_space+drainage_wall]);
+			translate([0, drainage_center, 0])
+				cylinder(d=drainage_diam, h=drainage_space+drainage_wall+base_thickness);
 		}
 	}
-
-	translate([0, 0, base_thickness])
-		cylinder(r=large_diameter/2+tab_margin, h=tab_height+0.1);
-
-	translate([0, circle_distance, base_thickness])
-		cylinder(r=small_diameter/2+tab_margin, h=tab_height+0.1);
 
 	// Screw holes
 	for (i = [0 : len(screw_holes) - 1]) {
@@ -99,6 +120,12 @@ difference() {
 			}
 		}
 	}
+
+	// Drainage hole
+	translate([0, drainage_center, 0])
+		cylinder(d=drainage_diam+0.01, h=base_thickness+drainage_space);
+	translate([-drainage_diam/2, drainage_center, base_thickness])
+		cube([drainage_diam, drainage_diam/2, drainage_space]);
 }
 
 for (i = [0 : len(tie_holes) - 1]) {
@@ -112,15 +139,15 @@ for (i = [0 : len(tie_holes) - 1]) {
 			scale([(tie_size - tie_height) / tie_reinforcement_height / 2, 1, 1])
 				intersection() {
 					cylinder(r=tie_reinforcement_height, h=tie_reinforcement_total, center=true);
-						translate([tie_reinforcement_height, 0, -tie_reinforcement_total/2])
-							rotate([0, -90, 0])
-								linear_extrude(tie_reinforcement_height*2)
-									polygon([
-										[0,0],
-										[tie_reinforcement_total, 0],
-										[tie_reinforcement_width + tie_reinforcement_bevel, tie_reinforcement_height],
-										[tie_reinforcement_bevel, tie_reinforcement_height]
-									]);
+					translate([tie_reinforcement_height, 0, -tie_reinforcement_total/2])
+						rotate([0, -90, 0])
+							linear_extrude(tie_reinforcement_height*2)
+								polygon([
+									[0,0],
+									[tie_reinforcement_total, 0],
+									[tie_reinforcement_width + tie_reinforcement_bevel, tie_reinforcement_height],
+									[tie_reinforcement_bevel, tie_reinforcement_height]
+								]);
 				}
 		}
 }
